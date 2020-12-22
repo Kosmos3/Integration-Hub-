@@ -65,7 +65,6 @@ struct PullToRefreshView: View {
                 }.frame(width: 0, height: 0)
                 
                 ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-
                     if refresh.started && refresh.released {
                         ProgressView()
                             .offset(y: -35)
@@ -78,29 +77,34 @@ struct PullToRefreshView: View {
                             .offset(y: -25)
                             .animation(.easeIn)
                     }
-                
-                    
                     VStack {
                         ForEach(ecg.testID) { value in
                         //ForEach(arrayData, id: \.self) { value in
                             Divider() // For the lines between Data
                             HStack {
                                 Text(value.observationTemplate.effectiveDateTime)
+                                    .foregroundColor(Color.black)
                                 //Text(value).colorScheme(.light)
                                 Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.black)
-                            }.padding()
-                            
-                             
+                                Text(value.sent.description)
+                                    .foregroundColor(Color.black)
+                                Spacer()
+                                Circle()
+                                    .fill(value.sent ? Color.green : Color.red)
+                                    .frame(width: 25, height: 25)
+                                    .padding(.trailing)
+                            }
+                            .padding()
                         }
+                        Divider()
                     }
                     .background(Color.white)
                 }
                 .offset(y: refresh.released ? 40 : -10.0)
             })
         }
-        .background(Color.black.opacity(0.06).ignoresSafeArea())
+        .background(Color("ScrollViewBG").ignoresSafeArea())
+        
     
 //        List(ecg.testID) {data in
 //            Text(data.observationTemplate.effectiveDateTime)
@@ -120,8 +124,12 @@ struct PullToRefreshView: View {
                 }
             }
         }
-        
         print("Updating data")
+    }
+    func tet() {
+        for i in ecg.testID.indices {
+            ecg.testID[i].sent = true
+        }
     }
     
     func sendData() {
@@ -132,12 +140,14 @@ struct PullToRefreshView: View {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        
-        for observation in ecg.testID {
-            let postString = ecg.getJSONString(observation: observation.observationTemplate)
+        for observation in ecg.testID.indices {
+            let postString = ecg.getJSONString(observation: ecg.testID[observation].observationTemplate)
             let data = postString.data(using: .utf8)
             request.httpBody = data
-
+            if ecg.testID[observation].sent {
+                print("Continue sendData Loop")
+                continue
+            }
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                     if let error = error {
                         print("Error took place \(error)")
@@ -145,10 +155,16 @@ struct PullToRefreshView: View {
                     }
              
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        DispatchQueue.main.async {
+                            ecg.testID[observation].sent = true
+                        }
                         print("Response data string:\n \(dataString)")
                     }
             }
             task.resume()
+        }
+        for test in ecg.testID {
+            print(test.sent)
         }
     }
 }

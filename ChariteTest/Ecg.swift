@@ -15,12 +15,10 @@ class EcgTest: ObservableObject{
     var latestDate : Date? = nil
     
     var descriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-    var predicate = HKQuery.predicateForSamples(withStart: nil, end: Date())
-    var firstTime = true
+    var predicate = HKQuery.predicateForSamples(withStart: nil, end: nil)
     
     @Published var testID = [TestID]()
-    
-    
+        
     // Function to authorize HealthKit on every start of the app
     func authorizeHealthKit() {
         let electroCarido = Set([HKObjectType.electrocardiogramType()])
@@ -50,29 +48,13 @@ class EcgTest: ObservableObject{
             guard let ecgSamples = samples as? [HKElectrocardiogram] else {
                 fatalError("*** Unable to convert \(String(describing: samples)) to [HKElectrocardiogram] ***")
             }
-            if !ecgSamples.isEmpty && self.latestDate == nil {
-                print("UP")
-                self.latestDate = ecgSamples[0].startDate
-                self.predicate = HKQuery.predicateForSamples(withStart: self.latestDate, end: nil)
-                self.descriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
-            }
             
+            print(self.predicate)
+            print("LatestDate \(String(describing: self.latestDate))")
+            print("Samples: \(ecgSamples)")
             for sample in ecgSamples {
-                print("Sample \(sample.startDate) Size: \(ecgSamples.count)")
-                if sample.startDate == self.latestDate! && !self.testID.isEmpty {
-                    print("inside \(sample.startDate)")
-                    print(ecgSamples)
-                    print("LatestDate \(self.latestDate!)")
-                    print("Setting lastestDate to \(ecgSamples[ecgSamples.count - 1].startDate)")
-                    self.latestDate = ecgSamples[ecgSamples.count - 1].startDate
-                    if(ecgSamples.count == 1 ) {
-                        print("Continue \n")
-                        continue
-                    }
-                    print("\n")
-                }
+
                 var dataDecimal = [Decimal]()
-                
                 let voltageQuery = HKElectrocardiogramQuery(sample) { (query, result) in
                     switch(result) {
                     case .measurement(let measurement):
@@ -81,18 +63,21 @@ class EcgTest: ObservableObject{
                             dataDecimal.append(voltageValue)
                         }
                     case .done:
+                        print()
+                        print("Done Entry")
                         let string = self.formatValues(data: "\(dataDecimal)")
                         let observationEcg = self.createObservation(sample: sample, string: string)
-                        let testIDObject = TestID.init(observationTemplate: observationEcg)
-                        print("Eingefügt wird: \(sample.startDate) LatestDate: \(self.latestDate!)")
+                        let testIDObject = TestID.init(date: sample.startDate, observationTemplate: observationEcg)
+                        print("Eingefügt wird: \(sample.startDate)")
                         DispatchQueue.main.async {
-                            if sample.startDate > self.latestDate! {
-                                print("Appending at the beg")
-                                self.testID.insert(testIDObject, at: 0)
-                            } else {
-                                print("Appending at the end")
-                                self.testID.append(testIDObject)
+                            self.testID.append(testIDObject)
+                            self.testID.sort {
+                                $0.date > $1.date
                             }
+                            self.latestDate = self.testID[0].date
+                            //self.predicate = HKQuery.predicateForSamples(withStart: self.latestDate, end: nil)
+                            self.predicate = NSPredicate(format: "%K > %@", HKPredicateKeyPathStartDate, self.latestDate! as NSDate)
+                            print(self.latestDate!)
                         }
                         print("Done")
                     case .error(let error):

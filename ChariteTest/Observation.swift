@@ -9,8 +9,9 @@ import Foundation
 
 struct TestID : Identifiable {
     let id = UUID()
+    let date : Date
     let observationTemplate: ObservationTemplate
-    let sent : Int = 1
+    var sent : Bool = false
 }
 
 struct ObservationTemplate : Encodable {

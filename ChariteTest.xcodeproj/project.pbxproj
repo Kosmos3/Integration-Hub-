@@ -169,6 +169,8 @@
 			dependencies = (
 			);
 			name = ChariteTest;
+			packageProductDependencies = (
+			);
 			productName = ChariteTest;
 			productReference = E274FD6924E5662200926BFE /* ChariteTest.app */;
 			productType = "com.apple.product-type.application";
@@ -240,6 +242,8 @@
 				Base,
 			);
 			mainGroup = E274FD6024E5662200926BFE;
+			packageReferences = (
+			);
 			productRefGroup = E274FD6A24E5662200926BFE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
