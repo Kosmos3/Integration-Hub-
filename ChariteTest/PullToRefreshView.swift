@@ -138,7 +138,9 @@ struct PullToRefreshView: View {
 
         var request = URLRequest(url: requestUrl)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Accept")
 
         for observation in ecg.testID.indices {
             let postString = ecg.getJSONString(observation: ecg.testID[observation].observationTemplate)

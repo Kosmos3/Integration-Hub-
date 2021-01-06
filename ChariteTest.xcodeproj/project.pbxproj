@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E2096ED725770484004529DA /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2096ED625770484004529DA /* Observation.swift */; };
+		E234A09A25940474000B775A /* RegisterLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234A09925940474000B775A /* RegisterLogin.swift */; };
+		E258CE1E25921CC40024446D /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258CE1D25921CC40024446D /* Patient.swift */; };
 		E274FD6D24E5662200926BFE /* ChariteTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274FD6C24E5662200926BFE /* ChariteTestApp.swift */; };
 		E274FD6F24E5662200926BFE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274FD6E24E5662200926BFE /* ContentView.swift */; };
 		E274FD7124E5662300926BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E274FD7024E5662300926BFE /* Assets.xcassets */; };
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		E2096ED625770484004529DA /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
+		E234A09925940474000B775A /* RegisterLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLogin.swift; sourceTree = "<group>"; };
+		E258CE1D25921CC40024446D /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		E274FD6924E5662200926BFE /* ChariteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChariteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E274FD6C24E5662200926BFE /* ChariteTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChariteTestApp.swift; sourceTree = "<group>"; };
 		E274FD6E24E5662200926BFE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				E2096ED625770484004529DA /* Observation.swift */,
 				E2AEEB1C253C87E400C2ED9F /* Ecg.swift */,
 				E2CA6E232587EF38001E8EF2 /* PullToRefreshView.swift */,
+				E258CE1D25921CC40024446D /* Patient.swift */,
+				E234A09925940474000B775A /* RegisterLogin.swift */,
 				E274FD7024E5662300926BFE /* Assets.xcassets */,
 				E274FD7524E5662300926BFE /* Info.plist */,
 				E274FD7224E5662300926BFE /* Preview Content */,
@@ -287,9 +293,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2096ED725770484004529DA /* Observation.swift in Sources */,
+				E234A09A25940474000B775A /* RegisterLogin.swift in Sources */,
 				E274FD6F24E5662200926BFE /* ContentView.swift in Sources */,
 				E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */,
 				E274FD6D24E5662200926BFE /* ChariteTestApp.swift in Sources */,
+				E258CE1E25921CC40024446D /* Patient.swift in Sources */,
 				E2CA6E242587EF38001E8EF2 /* PullToRefreshView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

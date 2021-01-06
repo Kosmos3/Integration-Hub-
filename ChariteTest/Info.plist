@@ -47,10 +47,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
-	<string>Nimm das an HelloHelloHi</string>
+	<string>This application need this permission for reading the values</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Nimm das an HelloHelloHi</string>
+	<string>This application need this permission for reading the values</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Nimm das an HelloHelloHi</string>
+	<string>This application need this permission for reading the values</string>
 </dict>
 </plist>

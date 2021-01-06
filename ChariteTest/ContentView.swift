@@ -15,7 +15,8 @@ struct ContentView: View {
 
 struct Home: View {
     var body: some View {
-        PullToRefreshView()
+        //PullToRefreshView()
+        RegisterLogin()
     }
 }
 
