@@ -67,6 +67,7 @@ class EcgTest: ObservableObject{
                         print("Done Entry")
                         let string = self.formatValues(data: "\(dataDecimal)")
                         let observationEcg = self.createObservation(sample: sample, string: string)
+                        printJSON(data: observationEcg)
                         let testIDObject = TestID.init(date: sample.startDate, observationTemplate: observationEcg)
                         print("Eingefügt wird: \(sample.startDate)")
                         DispatchQueue.main.async {
@@ -97,7 +98,7 @@ class EcgTest: ObservableObject{
     func createObservation(sample : HKElectrocardiogram, string : String) -> ObservationTemplate {
         let name = "Alonso Essenwanger"
         let deviceInit = Device.init(display: sample.sourceRevision.productType ?? "Old Device")
-        let effectiveDateTime = self.getISODateFromDate(unix: sample.startDate)
+        let effectiveDateTime = self.getISODateFromDate(date: sample.startDate)
         let performerInit = Performer.init(display: name, reference: name)
         let subjectInit = Subject.init(display: name, reference: name)
         let valueSampleDataInit = ValueSampledData.init(data: string, origin: Origin.init())
@@ -105,20 +106,15 @@ class EcgTest: ObservableObject{
         return ObservationTemplate.init(device: deviceInit, component: [componenValuesInit], subject: subjectInit, performer: [performerInit], effectiveDateTime: effectiveDateTime)
     }
     
+    // Function to extract brackets and ";" from the Ecg values
     func formatValues(data : String) -> String {
         return data.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "")
     }
     
-    func getISODateFromDate(unix : Date) -> String {
-        return ISO8601DateFormatter().string(from: unix)
+    func getISODateFromDate(date : Date) -> String {
+        return ISO8601DateFormatter().string(from: date)
     }
     
-    func printJSON(observation : ObservationTemplate) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-        let data = try! encoder.encode(observation)
-        print(String(data: data, encoding: .utf8)!)
-    }
     
     func getJSONString(observation : ObservationTemplate) -> String {
         let encoder = JSONEncoder()

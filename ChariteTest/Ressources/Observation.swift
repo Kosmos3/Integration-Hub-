@@ -50,7 +50,7 @@ struct Coding : Encodable {
 struct CodingValues : Encodable {
     let system : String
     let code : String
-    let display : String
+    var display : String? = nil
 }
 
 struct Device : Encodable {

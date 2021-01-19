@@ -14,9 +14,17 @@ struct ContentView: View {
 }
 
 struct Home: View {
+    
+    @State var signInSuccess = false
+    
     var body: some View {
-        //PullToRefreshView()
-        RegisterLogin()
+        if signInSuccess {
+            PullToRefreshView()
+                .transition(.move(edge: .trailing))
+                .animation(Animation.linear(duration: 0.5))
+        } else {
+            RegisterLogin(signedIn: $signInSuccess)
+        }
     }
 }
 

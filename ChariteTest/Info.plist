@@ -52,5 +52,10 @@
 	<string>This application need this permission for reading the values</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>This application need this permission for reading the values</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
