@@ -310,6 +310,7 @@ struct RegisterLogin: View {
 
 // Extension of the type string
 extension String {
+    // Determines if the String is blank
     var isBlank: Bool {
         return allSatisfy({ $0.isWhitespace })
     }
