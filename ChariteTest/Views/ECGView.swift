@@ -133,7 +133,7 @@ struct PullToRefreshView: View {
     }
     
     func sendData() {
-        let url = URL(string: "http://localhost:4080/Observation")
+        let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Observation")
         guard let requestUrl = url else { fatalError() }
 
         var request = URLRequest(url: requestUrl)

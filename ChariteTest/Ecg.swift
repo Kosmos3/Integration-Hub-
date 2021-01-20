@@ -18,6 +18,8 @@ class EcgTest: ObservableObject{
     var predicate = HKQuery.predicateForSamples(withStart: nil, end: nil)
     
     @Published var testID = [TestID]()
+    
+    private let userDefaults = UserDefaults.standard
         
     // Function to authorize HealthKit on every start of the app
     func authorizeHealthKit() {
@@ -96,7 +98,7 @@ class EcgTest: ObservableObject{
     }
     
     func createObservation(sample : HKElectrocardiogram, string : String) -> ObservationTemplate {
-        let name = "Alonso Essenwanger"
+        let name = "/Patient/\(userDefaults.string(forKey: "Output")!)"
         let deviceInit = Device.init(display: sample.sourceRevision.productType ?? "Old Device")
         let effectiveDateTime = self.getISODateFromDate(date: sample.startDate)
         let performerInit = Performer.init(display: name, reference: name)
