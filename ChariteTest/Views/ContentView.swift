@@ -15,7 +15,7 @@ struct ContentView: View {
 
 struct Home: View {
     
-    @State var signInSuccess = false
+    @State var signInSuccess = UserDefaults.standard.bool(forKey: "signedIn")
     
     var body: some View {
         if signInSuccess {

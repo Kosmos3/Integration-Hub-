@@ -105,7 +105,7 @@ struct RegisterLogin: View {
                         }
                     }
                 }
-                // TODO Workarround to fix constraints
+                // TODO Workarround to fix constraints and display Date
                 Section(header: Text("Geburtsdatum")) {
                     DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")}) // Apple's bug
                 }
@@ -136,7 +136,7 @@ struct RegisterLogin: View {
                                     }),
                                 trailing:
                                     Button("GetID") {
-                                        print(userDefaults.string(forKey: "Output") ?? "asd")
+                                        print(userDefaults.string(forKey: "Output") ?? "ID UserDefaults is empty")
                                         
                                     })
             .onAppear {
@@ -174,6 +174,7 @@ struct RegisterLogin: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
+        
         //let `extension` = Xtension.init(extension: [Xtension.ExtensionValues.init(url: "http://hl7.org/fhir/StructureDefinition/humanname-own-name", value: lastName.withoutWhitespace)])
         let name = NameValues.init(use: "official", family: lastName.withoutWhitespace, given: surName.split(separator: " ").map { String($0) }, prefix: [prefix]) // _family: `extension`,
         let birthname = NameValues.init(use: "maiden", family: birthName)
@@ -187,8 +188,29 @@ struct RegisterLogin: View {
         print("JSON created")
         printJSON(data: patient)
         print("Sending data")
-        sendData(data: patient)
-        //self.signInSuccess = true
+        // TODO: Restructure
+        //let test = surName.split(separator: " ").map { String($0) } //TODO FIX
+        let one = lastName
+        let two = dateFormatter.string(from: birthDate)
+        
+        getData(lastName: one, birthDate: two, postalCode: postalCode) { (total) in
+            if total == 0 {
+                sendData(data: patient) // Completion handler here
+                self.signInSuccess = true
+                userDefaults.set(true, forKey: "signedIn")
+            } else {
+                DispatchQueue.main.async {
+                    let errorAlert = UIAlertController(title: "Server", message: "Die eingegebene Daten sind bereits auf dem Server vorhanden", preferredStyle: .alert)
+                    let close = UIAlertAction(title: "Schließen", style: .destructive) { (UIAlertAction) in
+                        
+                    }
+                    errorAlert.addAction(close)
+                    UIApplication.shared.windows.first?.rootViewController?.present(errorAlert, animated: true, completion: {
+                        print("Showing user already in database alert")
+                    })
+                }
+            }
+        }
     }
     
     func readHKData() {
@@ -267,7 +289,7 @@ struct RegisterLogin: View {
                 }
                 errorAlert.addAction(close)
                 UIApplication.shared.windows.first?.rootViewController?.present(errorAlert, animated: true, completion: {
-                    print("qwe")
+                    print("Showing adress is wrong alert")
                 })
             }
         }

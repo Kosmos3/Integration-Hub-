@@ -54,6 +54,49 @@ func sendData(data: Patient) {
     task.resume()
 }
 
+func getData(lastName: String, birthDate: String, postalCode:Int, completion: @escaping (_ total: Int?) -> Void) {
+
+    let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)")
+    
+    guard let requestUrl = url else { fatalError() }
+
+    var request = URLRequest(url: requestUrl)
+    request.httpMethod = "GET"
+    //request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Content-Type")
+    //request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Accept")
+    
+    print("Request from URL \(url!)")
+    
+    var total: Int = 0
+    
+    
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        if let error = error {
+            print("Error took place \(error)")
+            return
+        }
+        
+        if let response = response as? HTTPURLResponse {
+            if response.statusCode == 200 {
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    let data = dataString.data(using: .utf8)!
+                    do {
+                        let output = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]
+                        total = output!["total"]! as? Int ?? -1
+                        print("Total: \(total)")
+                        completion(total)
+                    }
+                    catch {
+                        print (error)
+                    }
+                    //print("Response data string:\n \(dataString)")
+                }
+            }
+        }
+    }
+    task.resume()
+}
+
 func printJSON<T: Encodable>(data: T) {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
