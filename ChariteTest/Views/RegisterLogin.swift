@@ -299,7 +299,7 @@ struct RegisterLogin: View {
             if let addressQ = userDefaults.string(forKey: "Address") {
                 addr.text = addressQ
             } else {
-                addr.text = "http://"
+                addr.text = "http://localhost:4080"
             }
         }
         
