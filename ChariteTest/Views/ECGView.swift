@@ -126,6 +126,7 @@ struct PullToRefreshView: View {
         }
         print("Updating data")
     }
+    
     func tet() {
         for i in ecg.testID.indices {
             ecg.testID[i].sent = true
@@ -146,6 +147,7 @@ struct PullToRefreshView: View {
             let postString = ecg.getJSONString(observation: ecg.testID[observation].observationTemplate)
             let data = postString.data(using: .utf8)
             request.httpBody = data
+            // TODO: Check if break could be an option here
             if ecg.testID[observation].sent {
                 print("Continue sendData Loop")
                 continue
@@ -169,6 +171,8 @@ struct PullToRefreshView: View {
             print(test.sent)
         }
     }
+    
+    
 }
 
 struct Refresh {

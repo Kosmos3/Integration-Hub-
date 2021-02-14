@@ -25,7 +25,7 @@ struct RegisterLogin: View {
     @State private var address: String = "Anna-Louisa-Karsch Str. 2"
     @State private var city: String = "Berlin"
     @State private var state: String = "Berlin"
-    @State private var postalCode: Int = 10178 // TODO Numeric keyboard
+    @State private var postalCode: Int = 10178 // TODO Numeric keyboard as comment 
     @State private var countryCode: String = "DE"
     // Section Krankenkasse
     @State private var kkValue: String = "Z234567890"
@@ -114,8 +114,8 @@ struct RegisterLogin: View {
                     TextField("Bundesland", text: $state) // TODO Autocomplete
                     TextField("Stadt", text: $city) // TODO Autocomplete
                     TextField("Ländercode", text: $countryCode) // TODO Autocomplete
-                    TextField("Postleitzahl", value: $postalCode, formatter: NumberFormatter()) // TODO Autocomplete
-
+                    TextField("Postleitzahl", value: $postalCode, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
                 }
                 Section(header: Text("Krankenkasse")) {
                     TextField("Krankenkassenummer", text: $kkValue) // TODO Autocomplete
@@ -326,7 +326,7 @@ struct RegisterLogin: View {
 
 //struct RegisterLogin_Previews: PreviewProvider {
 //    static var previews: some View {
-//        RegisterLogin()
+//        RegisterLogin(signedIn: true)
 //    }
 //}
 

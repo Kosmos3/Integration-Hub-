@@ -55,7 +55,6 @@ class EcgTest: ObservableObject{
             print("LatestDate \(String(describing: self.latestDate))")
             print("Samples: \(ecgSamples)")
             for sample in ecgSamples {
-
                 var dataDecimal = [Decimal]()
                 let voltageQuery = HKElectrocardiogramQuery(sample) { (query, result) in
                     switch(result) {
@@ -69,9 +68,10 @@ class EcgTest: ObservableObject{
                         print("Done Entry")
                         let string = self.formatValues(data: "\(dataDecimal)")
                         let observationEcg = self.createObservation(sample: sample, string: string)
-                        printJSON(data: observationEcg)
+                        //printJSON(data: observationEcg)
                         let testIDObject = TestID.init(date: sample.startDate, observationTemplate: observationEcg)
                         print("Eingefügt wird: \(sample.startDate)")
+                        // TODO: Restructure
                         DispatchQueue.main.async {
                             self.testID.append(testIDObject)
                             self.testID.sort {
@@ -91,7 +91,8 @@ class EcgTest: ObservableObject{
                 }
                 // Execute the electrocardiogram query
                 self.healthStore.execute(voltageQuery)
-            } 
+            }
+            print("END For Loop")
         }
         // Execute the sample query.
         healthStore.execute(ecgQuery)
@@ -116,7 +117,6 @@ class EcgTest: ObservableObject{
     func getISODateFromDate(date : Date) -> String {
         return ISO8601DateFormatter().string(from: date)
     }
-    
     
     func getJSONString(observation : ObservationTemplate) -> String {
         let encoder = JSONEncoder()
