@@ -11,13 +11,13 @@ import HealthKit
 let store = HKHealthStore()
 
 struct RegisterLogin: View {
-    // Section Geschlecht
+    // Section Gender
     private var genderOptions = ["🙍‍♂️ Männlich", "🙍‍♀️ Weiblich", "🤖 Divers"]
     // Section Name
     @State private var surName: String = "Maja Julia"
     @State private var lastName: String = "Van-der-Dusen"
     @State private var birthName: String = "Haffer"
-    @State private var selectedGenderIndex: Int = 1 // -1
+    @State private var selectedGenderIndex: Int = 1 // Standard value should be here -1
     @State private var prefix: String = "Prof. Dr. med."
     // Section Birthdate
     @State private var birthDate = Date()
@@ -25,7 +25,7 @@ struct RegisterLogin: View {
     @State private var address: String = "Anna-Louisa-Karsch Str. 2"
     @State private var city: String = "Berlin"
     @State private var state: String = "Berlin"
-    @State private var postalCode: Int = 10178 // TODO Numeric keyboard as comment 
+    @State private var postalCode: Int = 10178
     @State private var countryCode: String = "DE"
     // Section Krankenkasse
     @State private var kkValue: String = "Z234567890"
@@ -62,63 +62,40 @@ struct RegisterLogin: View {
                 Section(header: Text("Name")) {
                     HStack {
                         TextField("Titel", text: $prefix)
-                        if !prefix.isEmpty {
-                            Button(action: {
-                                self.prefix = ""
-                            }, label: {
-                                Image(systemName: "delete.left")
-                                    .foregroundColor(Color(UIColor.opaqueSeparator))
-                            })
-                        }
+                            .modifier(CustomModifier(text: $prefix))
                     }
                     HStack {
                         TextField("Vorname", text: $surName)
-                        if !surName.isEmpty {
-                            Button(action: {
-                                self.surName = ""
-                            }, label: {
-                                Image(systemName: "delete.left")
-                                    .foregroundColor(Color(UIColor.opaqueSeparator))
-                            })
-                        }
+                            .modifier(CustomModifier(text: $surName))
                     }
                     HStack {
                         TextField("Nachname", text: $lastName)
-                        if !lastName.isEmpty {
-                            Button(action: {
-                                self.lastName = ""
-                            }, label: {
-                                Image(systemName: "delete.left")
-                                    .foregroundColor(Color(UIColor.opaqueSeparator))
-                            })
-                        }
+                            .modifier(CustomModifier(text: $lastName))
                     }
                     HStack {
                         TextField("Geburtsname", text: $birthName)
-                        if !birthName.isEmpty {
-                            Button(action: {
-                                self.birthName = ""
-                            }, label: {
-                                Image(systemName: "delete.left")
-                                    .foregroundColor(Color(UIColor.opaqueSeparator))
-                            })
-                        }
+                            .modifier(CustomModifier(text: $birthName))
                     }
                 }
-                // TODO Workarround to fix constraints and display Date
+                // TODO Workarround to fix constraints and display Date // Apple's bug
                 Section(header: Text("Geburtsdatum")) {
-                    DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")}) // Apple's bug
+                    DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")})
                 }
                 Section(header: Text("Adresse")) {
                     TextField("Adresse", text: $address) // TODO Autocomplete
+                        .modifier(CustomModifier(text: $address))
                     TextField("Bundesland", text: $state) // TODO Autocomplete
+                        .modifier(CustomModifier(text: $state))
                     TextField("Stadt", text: $city) // TODO Autocomplete
+                        .modifier(CustomModifier(text: $city))
                     TextField("Ländercode", text: $countryCode) // TODO Autocomplete
+                        .modifier(CustomModifier(text: $countryCode))
                     TextField("Postleitzahl", value: $postalCode, formatter: NumberFormatter())
                         .keyboardType(.numberPad)
                 }
                 Section(header: Text("Krankenkasse")) {
                     TextField("Krankenkassenummer", text: $kkValue) // TODO Autocomplete
+                        .modifier(CustomModifier(text: $kkValue))
                 }
                 
                 Section {
@@ -130,7 +107,7 @@ struct RegisterLogin: View {
             .navigationBarTitle("Registrierung")
             .navigationBarItems(leading:
                                     Button(action: {
-                                        alertView()
+                                        alertServerAddress()
                                     }, label: {
                                         Image(systemName: "network").foregroundColor(buttonColor)
                                     }),
@@ -139,6 +116,7 @@ struct RegisterLogin: View {
                                         print(userDefaults.string(forKey: "Output") ?? "ID UserDefaults is empty")
                                         
                                     })
+                                    
             .onAppear {
                 print("onAppear Start:")
                 readHKData()
@@ -177,12 +155,12 @@ struct RegisterLogin: View {
         
         //let `extension` = Xtension.init(extension: [Xtension.ExtensionValues.init(url: "http://hl7.org/fhir/StructureDefinition/humanname-own-name", value: lastName.withoutWhitespace)])
         let name = NameValues.init(use: "official", family: lastName.withoutWhitespace, given: surName.split(separator: " ").map { String($0) }, prefix: [prefix]) // _family: `extension`,
-        let birthname = NameValues.init(use: "maiden", family: birthName)
+        let birthname = NameValues.init(use: "maiden", family: birthName.withoutWhitespace)
         
         let address2 = Address.init(line: [address], city: city, state: state, postalCode: postalCode)
         
         //let identifier1 = Identifier.init(use: "usual", type: Coding.init(coding: [CodingValues.init(system: "http://terminology.hl7.org/CodeSystem/v2-0203", code: "MR")]), system: "https://www.medizininformatik-initiative.de/fhir/core/NamingSystem/patient-identifier", value: String(42285243))
-        let identifiert2 = Identifier.init(use: "official", type: Coding.init(coding: [CodingValues.init(system: "http://fhir.de/CodeSystem/identifier-type-de-basis", code: "GKV")]), system: "http://fhir.de/NamingSystem/gkv/kvid-10", value: kkValue, assigner: AssignValues.init(identifier: IdentifierValues.init(use: "official", value: "109519005", system: "http://fhir.de/NamingSystem/arge-ik/iknr")))
+        let identifiert2 = Identifier.init(use: "official", type: Coding.init(coding: [CodingValues.init(system: "http://fhir.de/CodeSystem/identifier-type-de-basis", code: "GKV")]), system: "http://fhir.de/sid/gkv/kvid-10", value: kkValue, assigner: AssignValues.init(identifier: IdentifierValues.init(use: "official", value: "109519005", system: "http://fhir.de/sid/arge-ik/iknr")))
         
         let patient = Patient.init(name: birthName.isBlank ? [name] : [name, birthname], address: [address2], identifier: [ identifiert2], gender: getGenderString(genderInt: selectedGenderIndex), birthDate: dateFormatter.string(from: birthDate))
         print("JSON created")
@@ -190,31 +168,31 @@ struct RegisterLogin: View {
         print("Sending data")
         // TODO: Restructure
         //let test = surName.split(separator: " ").map { String($0) } //TODO FIX
-        let one = lastName
+        let one = lastName.withoutWhitespace
         let two = dateFormatter.string(from: birthDate)
         
         getData(lastName: one, birthDate: two, postalCode: postalCode) { (total) in
             if total == 0 {
-                sendData(data: patient) // Completion handler here
-                self.signInSuccess = true
-                userDefaults.set(true, forKey: "signedIn")
-            } else {
-                DispatchQueue.main.async {
-                    let errorAlert = UIAlertController(title: "Server", message: "Die eingegebene Daten sind bereits auf dem Server vorhanden", preferredStyle: .alert)
-                    let close = UIAlertAction(title: "Schließen", style: .destructive) { (UIAlertAction) in
-                        
+                print("getData() delivered 0")
+                sendData(data: patient) { (statusCode) in
+                    if statusCode == 201 {
+                        self.signInSuccess = true
+                        userDefaults.set(true, forKey: "signedIn")
+                    } else {
+                        alertUser(message: "Fehler bei der Übertragung")
                     }
-                    errorAlert.addAction(close)
-                    UIApplication.shared.windows.first?.rootViewController?.present(errorAlert, animated: true, completion: {
-                        print("Showing user already in database alert")
-                    })
                 }
+            } else {
+                alertUser(message: "Die eingegebene Daten sind bereits auf dem Server vorhanden")
             }
         }
     }
     
+    /*
+     This functions reads the HealthKit data.
+     */
     func readHKData() {
-        print("Reading HK Data readHKData")
+        print("Reading HK Data readHKData") // TODO DELETE
         do {
             let birthDate = try store.dateOfBirthComponents().date
             let gender = try store.biologicalSex().biologicalSex
@@ -232,13 +210,17 @@ struct RegisterLogin: View {
             self.selectedGenderIndex = genderInt
             self.birthDate = birthDate!
         } catch {
-            print("Something went wrong: \(error)")            
+            print("Something went wrong: \(error)")
         }
     }
     
+    /*
+     This function is responsible to request the authorization to the user
+     The values requested are the biological sex and date of birth
+     */
     func authorizeHealthStore() {
         let personalData = Set([HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.dateOfBirth)!,
-                                 HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.biologicalSex)!])
+                                HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.biologicalSex)!])
         store.requestAuthorization(toShare: nil, read: personalData) { (sucess, error) in
             if sucess {
                 print("HealthKit Auth successful")
@@ -249,6 +231,9 @@ struct RegisterLogin: View {
         }
     }
     
+    /*
+     This function returns the definition equal to the picker's index
+     */
     func getGenderString(genderInt: Int) -> String {
         if genderInt == 0 {
             return "male"
@@ -259,16 +244,25 @@ struct RegisterLogin: View {
         }
     }
     
+    func alertUser(message: String) {
+        DispatchQueue.main.async {
+            let errorAlert = UIAlertController(title: "Server Error", message: message, preferredStyle: .alert)
+            let close = UIAlertAction(title: "Schließen", style: .destructive) { (UIAlertAction) in
+                
+            }
+            errorAlert.addAction(close)
+            UIApplication.shared.windows.first?.rootViewController?.present(errorAlert, animated: true, completion: {
+                print("Showing server error message")
+            })
+        }
+    }
+    
     // TODO Gültigkeit der Adresse prüfen
-    func alertView() {
+    func alertServerAddress() {
         var message: String = ""
         
-        if let address = userDefaults.string(forKey: "Address") {
-            if address.isBlank {
-                message = "Bitte Serveradresse eingeben "
-            } else {
-                message = "Bitte Serveradresse eingeben \n Aktuelle Adresse: \n \(address)"
-            }
+        if let address = userDefaults.string(forKey: "Address"), !address.isBlank {
+            message = "Bitte Serveradresse eingeben \n Aktuelle Adresse: \n \(address)"
         } else {
             message = "Bitte Serveradresse eingeben"
         }
@@ -281,7 +275,7 @@ struct RegisterLogin: View {
                 userDefaults.set(alertController.textFields![0].text!, forKey: "Address")
                 serverAddress = alertController.textFields![0].text!
                 print("Adress: \(serverAddress)")
-                print("SET")
+                print("Adress set")
             } else {
                 let errorAlert = UIAlertController(title: "Server", message: "Die eingegebene Serveradresse ist falsch", preferredStyle: .alert)
                 let close = UIAlertAction(title: "Schließen", style: .destructive) { (UIAlertAction) in
@@ -315,13 +309,13 @@ struct RegisterLogin: View {
     
     // TODO: Implement regex
     func verifyUrl (urlString: String?) -> Bool {
-       if let urlString = urlString {
-           if let url = NSURL(string: urlString) {
-               return UIApplication.shared.canOpenURL(url as URL)
-           }
-       }
-       return false
-   }
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url as URL)
+            }
+        }
+        return false
+    }
 }
 
 //struct RegisterLogin_Previews: PreviewProvider {
@@ -336,7 +330,26 @@ extension String {
     var isBlank: Bool {
         return allSatisfy({ $0.isWhitespace })
     }
+    
+    // Deletes all the spaces the user did in the input to minimize errors
     var withoutWhitespace: String {
         return trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+struct CustomModifier: ViewModifier {
+    @Binding var text: String
+    func body(content: Content) -> some View {
+        HStack {
+            content
+            if !text.isEmpty {
+                Button(action: {
+                    self.text = ""
+                }, label: {
+                    Image(systemName: "delete.left")
+                        .foregroundColor(Color(UIColor.opaqueSeparator))
+                })
+            }
+        }
     }
 }

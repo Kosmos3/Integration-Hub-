@@ -19,6 +19,7 @@
 		E288BA8A25B23AC10093CB8F /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA8925B23AC10093CB8F /* Server.swift */; };
 		E2A998C025A5EE9E00267D19 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A998BF25A5EE9E00267D19 /* Views.swift */; };
 		E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AEEB1C253C87E400C2ED9F /* Ecg.swift */; };
+		E2B8129425FE82FA00F8D10C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129325FE82FA00F8D10C /* User.swift */; };
 		E2C001112572DDA200BFF2A8 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C001102572DDA200BFF2A8 /* HealthKit.framework */; };
 		E2CA6E242587EF38001E8EF2 /* ECGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA6E232587EF38001E8EF2 /* ECGView.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		E288BA8925B23AC10093CB8F /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		E2A998BF25A5EE9E00267D19 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		E2AEEB1C253C87E400C2ED9F /* Ecg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ecg.swift; sourceTree = "<group>"; };
+		E2B8129325FE82FA00F8D10C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChariteTest.entitlements; sourceTree = "<group>"; };
 		E2C001102572DDA200BFF2A8 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E2CA6E232587EF38001E8EF2 /* ECGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECGView.swift; sourceTree = "<group>"; };
@@ -115,8 +117,9 @@
 			isa = PBXGroup;
 			children = (
 				E2A998C925A601E300267D19 /* Ressources */,
+				E2CE060925F830420016EF75 /* Model */,
+				E2CE060A25F8305E0016EF75 /* ViewModel */,
 				E2A998C425A6016800267D19 /* Views */,
-				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
 				E2AEEB1C253C87E400C2ED9F /* Ecg.swift */,
 				E288BA8925B23AC10093CB8F /* Server.swift */,
 				E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */,
@@ -156,6 +159,7 @@
 		E2A998C425A6016800267D19 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
 				E274FD6E24E5662200926BFE /* ContentView.swift */,
 				E2CA6E232587EF38001E8EF2 /* ECGView.swift */,
 				E234A09925940474000B775A /* RegisterLogin.swift */,
@@ -179,6 +183,21 @@
 				E2C001102572DDA200BFF2A8 /* HealthKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2CE060925F830420016EF75 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2B8129325FE82FA00F8D10C /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E2CE060A25F8305E0016EF75 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +341,7 @@
 				E274FD6D24E5662200926BFE /* ChariteTestApp.swift in Sources */,
 				E258CE1E25921CC40024446D /* Patient.swift in Sources */,
 				E288BA8A25B23AC10093CB8F /* Server.swift in Sources */,
+				E2B8129425FE82FA00F8D10C /* User.swift in Sources */,
 				E2CA6E242587EF38001E8EF2 /* ECGView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

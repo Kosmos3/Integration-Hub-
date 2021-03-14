@@ -7,8 +7,8 @@
 
 import Foundation
 
-// TODO Dynamically use the function maybe?
-func sendData(data: Patient) {
+// TODO Dynamically use of this function
+func sendData(data: Patient, completion: @escaping (_ statusCode: Int?) -> Void) {
     let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Patient")
     
     guard let requestUrl = url else { fatalError() }
@@ -28,7 +28,8 @@ func sendData(data: Patient) {
                 return
             }
             if let httpResponse = response as? HTTPURLResponse {
-                print("error \(httpResponse.statusCode)")
+                print("Send data status code: \(httpResponse.statusCode)")
+                completion(httpResponse.statusCode)
                 if httpResponse.statusCode == 201 {
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
                         let data = dataString.data(using: .utf8)!
@@ -42,7 +43,7 @@ func sendData(data: Patient) {
                         catch {
                             print (error)
                         }
-                        print("Response data string:\n \(dataString)")
+                        print("Response data string 201:\n \(dataString)")
                     }
                 } else {
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
@@ -54,21 +55,21 @@ func sendData(data: Patient) {
     task.resume()
 }
 
+// TODO Dynamically use of this function
 func getData(lastName: String, birthDate: String, postalCode:Int, completion: @escaping (_ total: Int?) -> Void) {
 
-    let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)")
+    //let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)")
+    var url = URLComponents(string: "\(UserDefaults.standard.string(forKey: "Address")!)")
+    url?.query = "/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)&_summary=count"
     
     guard let requestUrl = url else { fatalError() }
 
-    var request = URLRequest(url: requestUrl)
+    var request = URLRequest(url: requestUrl.url!)
     request.httpMethod = "GET"
-    //request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Content-Type")
-    //request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Accept")
     
     print("Request from URL \(url!)")
     
     var total: Int = 0
-    
     
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         if let error = error {
