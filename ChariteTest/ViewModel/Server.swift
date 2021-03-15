@@ -56,11 +56,9 @@ func sendData(data: Patient, completion: @escaping (_ statusCode: Int?) -> Void)
 }
 
 // TODO Dynamically use of this function
-func getData(lastName: String, birthDate: String, postalCode:Int, completion: @escaping (_ total: Int?) -> Void) {
-
-    //let url = URL(string: "\(UserDefaults.standard.string(forKey: "Address")!)/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)")
-    var url = URLComponents(string: "\(UserDefaults.standard.string(forKey: "Address")!)")
-    url?.query = "/Patient?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)&_summary=count"
+func getData(lastName: String, birthDate: String, postalCode:String, completion: @escaping (_ total: Int?) -> Void) {
+    var url = URLComponents(string: "\(UserDefaults.standard.string(forKey: "Address")! + "/Patient")")
+    url?.query = "?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)&_summary=count"
     
     guard let requestUrl = url else { fatalError() }
 
@@ -74,6 +72,7 @@ func getData(lastName: String, birthDate: String, postalCode:Int, completion: @e
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         if let error = error {
             print("Error took place \(error)")
+            completion(-1)
             return
         }
         

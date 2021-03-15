@@ -20,6 +20,7 @@
 		E2A998C025A5EE9E00267D19 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A998BF25A5EE9E00267D19 /* Views.swift */; };
 		E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AEEB1C253C87E400C2ED9F /* Ecg.swift */; };
 		E2B8129425FE82FA00F8D10C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129325FE82FA00F8D10C /* User.swift */; };
+		E2B8129C25FEAAF600F8D10C /* RegisterLogin_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */; };
 		E2C001112572DDA200BFF2A8 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C001102572DDA200BFF2A8 /* HealthKit.framework */; };
 		E2CA6E242587EF38001E8EF2 /* ECGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA6E232587EF38001E8EF2 /* ECGView.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		E2A998BF25A5EE9E00267D19 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		E2AEEB1C253C87E400C2ED9F /* Ecg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ecg.swift; sourceTree = "<group>"; };
 		E2B8129325FE82FA00F8D10C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLogin_VM.swift; sourceTree = "<group>"; };
 		E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChariteTest.entitlements; sourceTree = "<group>"; };
 		E2C001102572DDA200BFF2A8 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E2CA6E232587EF38001E8EF2 /* ECGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECGView.swift; sourceTree = "<group>"; };
@@ -116,12 +118,9 @@
 		E274FD6B24E5662200926BFE /* ChariteTest */ = {
 			isa = PBXGroup;
 			children = (
-				E2A998C925A601E300267D19 /* Ressources */,
 				E2CE060925F830420016EF75 /* Model */,
 				E2CE060A25F8305E0016EF75 /* ViewModel */,
 				E2A998C425A6016800267D19 /* Views */,
-				E2AEEB1C253C87E400C2ED9F /* Ecg.swift */,
-				E288BA8925B23AC10093CB8F /* Server.swift */,
 				E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */,
 				E274FD7024E5662300926BFE /* Assets.xcassets */,
 				E274FD7524E5662300926BFE /* Info.plist */,
@@ -188,6 +187,7 @@
 		E2CE060925F830420016EF75 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2A998C925A601E300267D19 /* Ressources */,
 				E2B8129325FE82FA00F8D10C /* User.swift */,
 			);
 			path = Model;
@@ -196,6 +196,9 @@
 		E2CE060A25F8305E0016EF75 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */,
+				E288BA8925B23AC10093CB8F /* Server.swift */,
+				E2AEEB1C253C87E400C2ED9F /* Ecg.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				E2096ED725770484004529DA /* Observation.swift in Sources */,
 				E234A09A25940474000B775A /* RegisterLogin.swift in Sources */,
 				E274FD6F24E5662200926BFE /* ContentView.swift in Sources */,
+				E2B8129C25FEAAF600F8D10C /* RegisterLogin_VM.swift in Sources */,
 				E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */,
 				E2A998C025A5EE9E00267D19 /* Views.swift in Sources */,
 				E274FD6D24E5662200926BFE /* ChariteTestApp.swift in Sources */,
@@ -429,7 +433,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -484,7 +488,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

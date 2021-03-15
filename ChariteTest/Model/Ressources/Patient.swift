@@ -74,7 +74,7 @@ struct Address: Encodable {
     let line: [String]
     let city: String
     let state: String
-    let postalCode: Int
+    let postalCode: String
     let country = "DE"
 }
 

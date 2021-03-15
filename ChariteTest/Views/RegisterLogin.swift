@@ -25,7 +25,7 @@ struct RegisterLogin: View {
     @State private var address: String = "Anna-Louisa-Karsch Str. 2"
     @State private var city: String = "Berlin"
     @State private var state: String = "Berlin"
-    @State private var postalCode: Int = 10178
+    @State private var postalCode: String = "10178"
     @State private var countryCode: String = "DE"
     // Section Krankenkasse
     @State private var kkValue: String = "Z234567890"
@@ -77,9 +77,15 @@ struct RegisterLogin: View {
                             .modifier(CustomModifier(text: $birthName))
                     }
                 }
+                
                 // TODO Workarround to fix constraints and display Date // Apple's bug
                 Section(header: Text("Geburtsdatum")) {
                     DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")})
+                    /*
+                    DatePicker("asd",
+                               selection: $birthDate,
+                               displayedComponents: [.date]
+                    ).datePickerStyle(DefaultDatePickerStyle())*/
                 }
                 Section(header: Text("Adresse")) {
                     TextField("Adresse", text: $address) // TODO Autocomplete
@@ -90,8 +96,9 @@ struct RegisterLogin: View {
                         .modifier(CustomModifier(text: $city))
                     TextField("Ländercode", text: $countryCode) // TODO Autocomplete
                         .modifier(CustomModifier(text: $countryCode))
-                    TextField("Postleitzahl", value: $postalCode, formatter: NumberFormatter())
+                    TextField("Postleitzahl", text: $postalCode)
                         .keyboardType(.numberPad)
+                        .modifier(CustomModifier(text: $postalCode))
                 }
                 Section(header: Text("Krankenkasse")) {
                     TextField("Krankenkassenummer", text: $kkValue) // TODO Autocomplete
@@ -182,6 +189,8 @@ struct RegisterLogin: View {
                         alertUser(message: "Fehler bei der Übertragung")
                     }
                 }
+            } else if total == -1 {
+                alertUser(message: "Fehler bei der übertragung")
             } else {
                 alertUser(message: "Die eingegebene Daten sind bereits auf dem Server vorhanden")
             }
