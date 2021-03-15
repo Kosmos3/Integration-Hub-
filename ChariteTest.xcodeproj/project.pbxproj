@@ -17,10 +17,10 @@
 		E274FD7F24E5662300926BFE /* ChariteTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274FD7E24E5662300926BFE /* ChariteTestTests.swift */; };
 		E274FD8A24E5662300926BFE /* ChariteTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274FD8924E5662300926BFE /* ChariteTestUITests.swift */; };
 		E288BA8A25B23AC10093CB8F /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BA8925B23AC10093CB8F /* Server.swift */; };
-		E2A998C025A5EE9E00267D19 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A998BF25A5EE9E00267D19 /* Views.swift */; };
-		E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AEEB1C253C87E400C2ED9F /* Ecg.swift */; };
+		E2A998C025A5EE9E00267D19 /* TestViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A998BF25A5EE9E00267D19 /* TestViews.swift */; };
+		E2AEEB1D253C87E400C2ED9F /* EcgVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AEEB1C253C87E400C2ED9F /* EcgVM.swift */; };
 		E2B8129425FE82FA00F8D10C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129325FE82FA00F8D10C /* User.swift */; };
-		E2B8129C25FEAAF600F8D10C /* RegisterLogin_VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */; };
+		E2B8129C25FEAAF600F8D10C /* RegisterLoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8129B25FEAAF600F8D10C /* RegisterLoginVM.swift */; };
 		E2C001112572DDA200BFF2A8 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C001102572DDA200BFF2A8 /* HealthKit.framework */; };
 		E2CA6E242587EF38001E8EF2 /* ECGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CA6E232587EF38001E8EF2 /* ECGView.swift */; };
 /* End PBXBuildFile section */
@@ -59,10 +59,10 @@
 		E274FD8924E5662300926BFE /* ChariteTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChariteTestUITests.swift; sourceTree = "<group>"; };
 		E274FD8B24E5662300926BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E288BA8925B23AC10093CB8F /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
-		E2A998BF25A5EE9E00267D19 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
-		E2AEEB1C253C87E400C2ED9F /* Ecg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ecg.swift; sourceTree = "<group>"; };
+		E2A998BF25A5EE9E00267D19 /* TestViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViews.swift; sourceTree = "<group>"; };
+		E2AEEB1C253C87E400C2ED9F /* EcgVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcgVM.swift; sourceTree = "<group>"; };
 		E2B8129325FE82FA00F8D10C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLogin_VM.swift; sourceTree = "<group>"; };
+		E2B8129B25FEAAF600F8D10C /* RegisterLoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLoginVM.swift; sourceTree = "<group>"; };
 		E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChariteTest.entitlements; sourceTree = "<group>"; };
 		E2C001102572DDA200BFF2A8 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E2CA6E232587EF38001E8EF2 /* ECGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECGView.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 				E274FD6E24E5662200926BFE /* ContentView.swift */,
 				E2CA6E232587EF38001E8EF2 /* ECGView.swift */,
 				E234A09925940474000B775A /* RegisterLogin.swift */,
-				E2A998BF25A5EE9E00267D19 /* Views.swift */,
+				E2A998BF25A5EE9E00267D19 /* TestViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,9 +196,9 @@
 		E2CE060A25F8305E0016EF75 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E2B8129B25FEAAF600F8D10C /* RegisterLogin_VM.swift */,
+				E2B8129B25FEAAF600F8D10C /* RegisterLoginVM.swift */,
 				E288BA8925B23AC10093CB8F /* Server.swift */,
-				E2AEEB1C253C87E400C2ED9F /* Ecg.swift */,
+				E2AEEB1C253C87E400C2ED9F /* EcgVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -339,9 +339,9 @@
 				E2096ED725770484004529DA /* Observation.swift in Sources */,
 				E234A09A25940474000B775A /* RegisterLogin.swift in Sources */,
 				E274FD6F24E5662200926BFE /* ContentView.swift in Sources */,
-				E2B8129C25FEAAF600F8D10C /* RegisterLogin_VM.swift in Sources */,
-				E2AEEB1D253C87E400C2ED9F /* Ecg.swift in Sources */,
-				E2A998C025A5EE9E00267D19 /* Views.swift in Sources */,
+				E2B8129C25FEAAF600F8D10C /* RegisterLoginVM.swift in Sources */,
+				E2AEEB1D253C87E400C2ED9F /* EcgVM.swift in Sources */,
+				E2A998C025A5EE9E00267D19 /* TestViews.swift in Sources */,
 				E274FD6D24E5662200926BFE /* ChariteTestApp.swift in Sources */,
 				E258CE1E25921CC40024446D /* Patient.swift in Sources */,
 				E288BA8A25B23AC10093CB8F /* Server.swift in Sources */,

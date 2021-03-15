@@ -8,7 +8,7 @@
 import Foundation
 import HealthKit
 
-class EcgTest: ObservableObject{
+class EcgVM: ObservableObject{
     // Add code to use HealthKit here.
     let healthStore = HKHealthStore()
     
@@ -17,7 +17,7 @@ class EcgTest: ObservableObject{
     var descriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
     var predicate = HKQuery.predicateForSamples(withStart: nil, end: nil)
     
-    @Published var testID = [TestID]()
+    @Published var ecg = [ecgValue]()
     
     private let userDefaults = UserDefaults.standard
         
@@ -69,16 +69,15 @@ class EcgTest: ObservableObject{
                         let string = self.formatValues(data: "\(dataDecimal)")
                         let observationEcg = self.createObservation(sample: sample, string: string)
                         //printJSON(data: observationEcg)
-                        let testIDObject = TestID.init(date: sample.startDate, observationTemplate: observationEcg)
+                        let testIDObject = ecgValue.init(date: sample.startDate, observationTemplate: observationEcg)
                         print("Eingefügt wird: \(sample.startDate)")
                         // TODO: Restructure
                         DispatchQueue.main.async {
-                            self.testID.append(testIDObject)
-                            self.testID.sort {
+                            self.ecg.append(testIDObject)
+                            self.ecg.sort {
                                 $0.date > $1.date
                             }
-                            self.latestDate = self.testID[0].date
-                            //self.predicate = HKQuery.predicateForSamples(withStart: self.latestDate, end: nil)
+                            self.latestDate = self.ecg[0].date
                             self.predicate = NSPredicate(format: "%K > %@", HKPredicateKeyPathStartDate, self.latestDate! as NSDate)
                             print(self.latestDate!)
                         }
@@ -116,12 +115,5 @@ class EcgTest: ObservableObject{
     
     func getISODateFromDate(date : Date) -> String {
         return ISO8601DateFormatter().string(from: date)
-    }
-    
-    func getJSONString(observation : ObservationTemplate) -> String {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-        let data = try! encoder.encode(observation)
-        return String(data: data, encoding: .utf8)!
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TestID : Identifiable {
+struct ecgValue : Identifiable {
     let id = UUID()
     let date : Date
     let observationTemplate: ObservationTemplate

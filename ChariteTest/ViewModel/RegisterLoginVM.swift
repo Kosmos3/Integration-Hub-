@@ -7,6 +7,6 @@
 
 import Foundation
 
-final class RegisterLogin_VM {
+final class RegisterLoginVM {
     
 }

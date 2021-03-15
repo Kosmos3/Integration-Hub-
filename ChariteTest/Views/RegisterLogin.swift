@@ -80,7 +80,9 @@ struct RegisterLogin: View {
                 
                 // TODO Workarround to fix constraints and display Date // Apple's bug
                 Section(header: Text("Geburtsdatum")) {
-                    DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")})
+                    HStack {
+                        DatePicker(selection: $birthDate, displayedComponents: [.date], label: { Text("Datum")})
+                    }
                     /*
                     DatePicker("asd",
                                selection: $birthDate,
