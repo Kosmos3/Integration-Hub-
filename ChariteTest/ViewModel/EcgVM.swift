@@ -20,6 +20,10 @@ class EcgVM: ObservableObject{
     @Published var ecg = [ecgValue]()
     
     private let userDefaults = UserDefaults.standard
+    
+    init() {
+        authorizeHealthKit()
+    }
         
     // Function to authorize HealthKit on every start of the app
     func authorizeHealthKit() {
@@ -113,7 +117,14 @@ class EcgVM: ObservableObject{
         return data.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "")
     }
     
-    func getISODateFromDate(date : Date) -> String {
+    func getISODateFromDate(date: Date) -> String {
         return ISO8601DateFormatter().string(from: date)
+    }
+    
+    func getDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        return dateFormatter.string(from: date)
     }
 }

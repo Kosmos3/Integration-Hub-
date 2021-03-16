@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct PullToRefreshView: View {
-    @ObservedObject var ecg = EcgVM()
+    @StateObject var ecgVM: EcgVM
     init() {
-        ecg.authorizeHealthKit()
+        _ecgVM = StateObject(wrappedValue: EcgVM())
+//        ecgVM.authorizeHealthKit()
     }
     @State var arrayData = ["Test", "Test2", "Test3"] // DELETE
     @State var refresh = Refresh.init(started: false, released: false, invalid: false)
@@ -78,13 +79,12 @@ struct PullToRefreshView: View {
                             .animation(.easeIn)
                     }
                     VStack {
-                        ForEach(ecg.ecg) { value in
+                        ForEach(ecgVM.ecg) { value in
                         //ForEach(arrayData, id: \.self) { value in
                             Divider() // For the lines between Data
                             HStack {
-                                Text(value.observationTemplate.effectiveDateTime)
+                                Text(ecgVM.getDate(date: value.date))
                                     .foregroundColor(Color.black)
-                                //Text(value).colorScheme(.light)
                                 Spacer()
                                 Circle()
                                     .fill(value.sent ? Color.green : Color.red)
@@ -113,7 +113,7 @@ struct PullToRefreshView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             withAnimation(Animation.linear) {
                 if refresh.startOffset == refresh.offset {
-                    ecg.readEcgData()
+                    ecgVM.readEcgData()
                     refresh.released = false
                     refresh.started = false
                 } else {
@@ -125,8 +125,8 @@ struct PullToRefreshView: View {
     }
     
     func tet() {
-        for i in ecg.ecg.indices {
-            ecg.ecg[i].sent = true
+        for i in ecgVM.ecg.indices {
+            ecgVM.ecg[i].sent = true
         }
     }
     
@@ -140,12 +140,12 @@ struct PullToRefreshView: View {
         request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Content-Type")
         request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Accept")
 
-        for observation in ecg.ecg.indices {
-            let postString = getJSONString(data: ecg.ecg[observation].observationTemplate)
+        for observation in ecgVM.ecg.indices {
+            let postString = getJSONString(data: ecgVM.ecg[observation].observationTemplate)
             let data = postString.data(using: .utf8)
             request.httpBody = data
             // TODO: Check if break could be an option here
-            if ecg.ecg[observation].sent {
+            if ecgVM.ecg[observation].sent {
                 print("Continue sendData Loop")
                 continue
             }
@@ -157,14 +157,14 @@ struct PullToRefreshView: View {
              
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
                         DispatchQueue.main.async {
-                            ecg.ecg[observation].sent = true
+                            ecgVM.ecg[observation].sent = true
                         }
                         print("Response data string:\n \(dataString)")
                     }
             }
             task.resume()
         }
-        for test in ecg.ecg {
+        for test in ecgVM.ecg {
             print(test.sent)
         }
     }

@@ -58,7 +58,7 @@ func sendData(data: Patient, completion: @escaping (_ statusCode: Int?) -> Void)
 // TODO Dynamically use of this function
 func getData(lastName: String, birthDate: String, postalCode:String, completion: @escaping (_ total: Int?) -> Void) {
     var url = URLComponents(string: "\(UserDefaults.standard.string(forKey: "Address")! + "/Patient")")
-    url?.query = "?family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)&_summary=count"
+    url?.query = "family=\(lastName)&birthdate=\(birthDate)&address-postalcode=\(postalCode)&_summary=count"
     
     guard let requestUrl = url else { fatalError() }
 

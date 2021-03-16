@@ -121,6 +121,8 @@
 				E2CE060925F830420016EF75 /* Model */,
 				E2CE060A25F8305E0016EF75 /* ViewModel */,
 				E2A998C425A6016800267D19 /* Views */,
+				E274FD6E24E5662200926BFE /* ContentView.swift */,
+				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
 				E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */,
 				E274FD7024E5662300926BFE /* Assets.xcassets */,
 				E274FD7524E5662300926BFE /* Info.plist */,
@@ -158,10 +160,8 @@
 		E2A998C425A6016800267D19 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
-				E274FD6E24E5662200926BFE /* ContentView.swift */,
-				E2CA6E232587EF38001E8EF2 /* ECGView.swift */,
 				E234A09925940474000B775A /* RegisterLogin.swift */,
+				E2CA6E232587EF38001E8EF2 /* ECGView.swift */,
 				E2A998BF25A5EE9E00267D19 /* TestViews.swift */,
 			);
 			path = Views;

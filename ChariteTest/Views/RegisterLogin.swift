@@ -127,10 +127,11 @@ struct RegisterLogin: View {
                                     })
                                     
             .onAppear {
-                print("onAppear Start:")
-                readHKData()
-                print("onAppear End \n")
+//                print("onAppear Start:")
+                
+//                print("onAppear End \n")
             }
+            
         }.navigationViewStyle(StackNavigationViewStyle())
     }
     
@@ -220,6 +221,7 @@ struct RegisterLogin: View {
             }
             self.selectedGenderIndex = genderInt
             self.birthDate = birthDate!
+            
         } catch {
             print("Something went wrong: \(error)")
         }
