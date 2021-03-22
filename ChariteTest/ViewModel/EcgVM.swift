@@ -67,6 +67,7 @@ class EcgVM: ObservableObject{
             print("Actual predicate: \(self.predicate)")
             print("LatestDate: \(String(describing: self.latestDate))")
             for sample in ecgSamples {
+                print("SYMPTOM STATUS: \(sample.symptomsStatus == .present)")
                 print("Status \(sample.symptomsStatus.rawValue)")
                 self.getAllSymptoms(from: sample) { HKCategoryTypeIdentifier in
                     let categoryIdentifier = HKCategoryTypeIdentifier
@@ -193,7 +194,7 @@ class EcgVM: ObservableObject{
                                                   display: "Dizziness (finding)")]
                 value = ValueCodeableConcept.init(coding: codingValues,
                                                   text: "Dizziness (finding)")
-            
+
             default:
                 codingValues = [CodingValues.init(system: "http://snomed.info/sct",
                                                   code: "260413007",
