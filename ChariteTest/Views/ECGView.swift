@@ -136,12 +136,12 @@ struct PullToRefreshView: View {
 
         var request = URLRequest(url: requestUrl)
         request.httpMethod = "POST"
-        //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Content-Type")
         request.setValue("application/fhir+json; fhirVersion=4.0", forHTTPHeaderField: "Accept")
 
         for observation in ecgVM.ecg.indices {
             let postString = getJSONString(data: ecgVM.ecg[observation].observationTemplate)
+            //print(postString)
             let data = postString.data(using: .utf8)
             request.httpBody = data
             // TODO: Check if break could be an option here
@@ -154,7 +154,7 @@ struct PullToRefreshView: View {
                         print("Error took place \(error)")
                         return
                     }
-             
+
                     if let data = data, let dataString = String(data: data, encoding: .utf8) {
                         DispatchQueue.main.async {
                             ecgVM.ecg[observation].sent = true
@@ -168,8 +168,6 @@ struct PullToRefreshView: View {
             print(test.sent)
         }
     }
-    
-    
 }
 
 struct Refresh {

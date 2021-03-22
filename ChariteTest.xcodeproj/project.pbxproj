@@ -122,8 +122,8 @@
 				E2CE060A25F8305E0016EF75 /* ViewModel */,
 				E2A998C425A6016800267D19 /* Views */,
 				E274FD6E24E5662200926BFE /* ContentView.swift */,
-				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
 				E2C0010E2572DDA200BFF2A8 /* ChariteTest.entitlements */,
+				E274FD6C24E5662200926BFE /* ChariteTestApp.swift */,
 				E274FD7024E5662300926BFE /* Assets.xcassets */,
 				E274FD7524E5662300926BFE /* Info.plist */,
 				E274FD7224E5662300926BFE /* Preview Content */,
@@ -510,7 +510,7 @@
 				DEVELOPMENT_TEAM = GB63D9G8WE;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = ChariteTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -534,7 +534,7 @@
 				DEVELOPMENT_TEAM = GB63D9G8WE;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = ChariteTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -554,7 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB63D9G8WE;
 				INFOPLIST_FILE = ChariteTestTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -576,7 +576,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GB63D9G8WE;
 				INFOPLIST_FILE = ChariteTestTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

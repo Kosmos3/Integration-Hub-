@@ -10,7 +10,8 @@ import Foundation
 
 struct Patient: Encodable {
     let resourceType = "Patient"
-    let meta = Meta.init()
+    // let meta = Meta.init()
+    // TODO Turn back on
     let name: [NameValues]
     let managingOrganization = ManagingOrg.init()
     let address : [Address]

@@ -11,13 +11,16 @@ import HealthKit
 let store = HKHealthStore()
 
 struct RegisterLogin: View {
+//    @StateObject var registerLoginVM = RegisterLoginVM()
+    @ObservedObject var registerLoginVM: RegisterLoginVM
+    
     // Section Gender
-    private var genderOptions = ["🙍‍♂️ Männlich", "🙍‍♀️ Weiblich", "🤖 Divers"]
+    var genderOptions = ["🙍‍♂️ Männlich", "🙍‍♀️ Weiblich", "🤖 Divers"]
     // Section Name
     @State private var surName: String = "Maja Julia"
     @State private var lastName: String = "Van-der-Dusen"
     @State private var birthName: String = "Haffer"
-    @State private var selectedGenderIndex: Int = 1 // Standard value should be here -1
+//    @State private var selectedGenderIndex: Int = 1 // Standard value should be here -1
     @State private var prefix: String = "Prof. Dr. med."
     // Section Birthdate
     @State private var birthDate = Date()
@@ -37,23 +40,22 @@ struct RegisterLogin: View {
     // Determines if the user is signed in
     @Binding var signInSuccess: Bool
     // UserDeaulf for saving data
-    private let userDefaults = UserDefaults.standard
+    let userDefaults = UserDefaults.standard
     // Server address
     @State private var serverAddress: String = UserDefaults.standard.string(forKey: "Address") ?? ""
     
     @State var alertController: UIAlertController! // Alternative?
     
-    init(signedIn: Binding<Bool>) {
-        self._signInSuccess = signedIn
-        getCountries()
-        authorizeHealthStore()
-    }
+//    init(signedIn: Binding<Bool>) {
+//        self._signInSuccess = signedIn
+//        getCountries()
+//    }
     
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Geschlecht")) {
-                    Picker("Gender", selection: $selectedGenderIndex) {
+                    Picker("Gender", selection: $registerLoginVM.user.selectedGenderIndex) {
                         ForEach(0..<genderOptions.count) {
                             Text(self.genderOptions[$0])
                         }
@@ -88,6 +90,9 @@ struct RegisterLogin: View {
                                selection: $birthDate,
                                displayedComponents: [.date]
                     ).datePickerStyle(DefaultDatePickerStyle())*/
+//                    DatePicker("asd", selection: $birthDate, displayedComponents: [.date])
+//                        .datePickerStyle(GraphicalDatePickerStyle())
+                    
                 }
                 Section(header: Text("Adresse")) {
                     TextField("Adresse", text: $address) // TODO Autocomplete
@@ -110,7 +115,7 @@ struct RegisterLogin: View {
                 Section {
                     Button("Registrieren") {
                         createJSON()
-                    }.disabled(surName.isBlank || lastName.isBlank || selectedGenderIndex == -1 || serverAddress.isBlank) // TODO Complete
+                    }.disabled(surName.isBlank || lastName.isBlank || registerLoginVM.user.selectedGenderIndex == -1 || serverAddress.isBlank) // TODO Complete
                 }
             }
             .navigationBarTitle("Registrierung")
@@ -127,9 +132,15 @@ struct RegisterLogin: View {
                                     })
                                     
             .onAppear {
-//                print("onAppear Start:")
-                
-//                print("onAppear End \n")
+                print("onAppear Start:")
+                authorizeHealthStore { status in
+                    if status {
+                        DispatchQueue.main.async {
+                            readHKData()
+                        }
+                    }
+                }
+                print("onAppear End \n")
             }
             
         }.navigationViewStyle(StackNavigationViewStyle())
@@ -172,7 +183,7 @@ struct RegisterLogin: View {
         //let identifier1 = Identifier.init(use: "usual", type: Coding.init(coding: [CodingValues.init(system: "http://terminology.hl7.org/CodeSystem/v2-0203", code: "MR")]), system: "https://www.medizininformatik-initiative.de/fhir/core/NamingSystem/patient-identifier", value: String(42285243))
         let identifiert2 = Identifier.init(use: "official", type: Coding.init(coding: [CodingValues.init(system: "http://fhir.de/CodeSystem/identifier-type-de-basis", code: "GKV")]), system: "http://fhir.de/sid/gkv/kvid-10", value: kkValue, assigner: AssignValues.init(identifier: IdentifierValues.init(use: "official", value: "109519005", system: "http://fhir.de/sid/arge-ik/iknr")))
         
-        let patient = Patient.init(name: birthName.isBlank ? [name] : [name, birthname], address: [address2], identifier: [ identifiert2], gender: getGenderString(genderInt: selectedGenderIndex), birthDate: dateFormatter.string(from: birthDate))
+        let patient = Patient.init(name: birthName.isBlank ? [name] : [name, birthname], address: [address2], identifier: [ identifiert2], gender: getGenderString(genderInt: registerLoginVM.user.selectedGenderIndex), birthDate: dateFormatter.string(from: birthDate))
         print("JSON created")
         printJSON(data: patient)
         print("Sending data")
@@ -219,7 +230,7 @@ struct RegisterLogin: View {
             default:
                 genderInt = -1
             }
-            self.selectedGenderIndex = genderInt
+            self.registerLoginVM.user.selectedGenderIndex = genderInt
             self.birthDate = birthDate!
             
         } catch {
@@ -231,14 +242,15 @@ struct RegisterLogin: View {
      This function is responsible to request the authorization to the user
      The values requested are the biological sex and date of birth
      */
-    func authorizeHealthStore() {
+    func authorizeHealthStore(completion: @escaping (_ sucess: Bool) -> Void) {
         let personalData = Set([HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.dateOfBirth)!,
                                 HKObjectType.characteristicType(forIdentifier: HKCharacteristicTypeIdentifier.biologicalSex)!])
         store.requestAuthorization(toShare: nil, read: personalData) { (sucess, error) in
             if sucess {
+                completion(true)
                 print("HealthKit Auth successful")
-                readHKData()
             } else {
+                completion(false)
                 print("HealthKit Auth Error")
             }
         }

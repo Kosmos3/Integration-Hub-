@@ -91,6 +91,8 @@ func getData(lastName: String, birthDate: String, postalCode:String, completion:
                     }
                     //print("Response data string:\n \(dataString)")
                 }
+            } else {
+                completion(-1)
             }
         }
     }

@@ -30,13 +30,17 @@ struct Home: View {
      */
     @State var signInSuccess = UserDefaults.standard.bool(forKey: "signedIn")
     
+    @StateObject var registerLoginVM = RegisterLoginVM()
+    
     var body: some View {
         if signInSuccess {
             PullToRefreshView()
                 .transition(.move(edge: .trailing))
                 .animation(Animation.linear(duration: 0.5))
         } else {
-            RegisterLogin(signedIn: $signInSuccess)
+//            RegisterLogin(signedIn: $signInSuccess)
+            RegisterLogin(registerLoginVM: registerLoginVM, signInSuccess: $signInSuccess)
+
         }
     }
 }

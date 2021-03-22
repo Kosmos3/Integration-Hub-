@@ -7,18 +7,21 @@
 
 import Foundation
 
+/*
+    This struct stores the registered user
+ */
 struct User {
-    let gender: Int
+    var selectedGenderIndex: Int
     
-    let surName: String
-    let lastName: String
-    let prefix: String
-    let birthDate: Date
+    var surName: String
+    var lastName: String
+    var prefix: String
+    var birthDate: Date
     
-    let city: String
-    let state: String
-    let postalCode: Int
-    let countryCode: String
+    var city: String
+    var state: String
+    var postalCode: Int
+    var countryCode: String
     
-    let kkValue: String
+    var kkValue: String
 }
